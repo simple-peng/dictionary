@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>KMP字符串模式</title>
+</head>
+
+<body>
+  <div id="container"></div>
+  <script type="text/javascript">
+
+  function kmp(source,pattern){
+    let table = new Array(pattern.length).fill(0)
+
+    {
+      //i表示坐标，j表示匹配的个数
+      let i = 1,j = 0;
+      while(i < pattern.length){
+        if(pattern[i] == pattern[j]){
+          ++i,++j;
+          table[i] = j
+        }else{
+          if(j>0){
+            j = table[j]
+          }else{
+            ++i
+          }
+        }
+      }
+    }
+
+    {
+      let i = 0,j = 0;
+      while(i < source.length){
+        if(source[i] == pattern[j]){
+          ++i,++j;
+        }else{
+          if(j > 0){
+            j = table[j]
+          }else{
+            ++i
+          }
+        }
+        if(j == pattern.length){
+          return true
+        }
+      }
+      return false
+    }
+  }
+  console.log(kmp("helloxdf","hello"))
+  </script>
+</body>
+</html>
